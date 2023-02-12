@@ -7,21 +7,19 @@ import Account from './pages/Account';
 
 function App() {
   return (
-    <div>
-      <AuthContextProvider>
-        <Navbar />
-        <Routes>
-          <Route
-            path='/account'
-            element={
-              <Protected>
-                <Account />
-              </Protected>
-            }
-          />
-        </Routes>
-      </AuthContextProvider>
-    </div>
+    <AuthContextProvider>
+      <Navbar />
+      <Routes>
+        <Route
+          path='/account'
+          element={
+            <Protected>
+              <Account />
+            </Protected>
+          }
+        />
+      </Routes>
+    </AuthContextProvider>
   );
 }
 

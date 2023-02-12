@@ -29,9 +29,10 @@ const Navbar = () => {
     <div className='navbar'>
       <h1>F-Bus University</h1>
       {user?.displayName ? (
-        <p></p>
+        <br />
       ) : (
         <div className='googleButton'>
+          <h3>Please Login by account FPT University</h3>
           <GoogleButton style={{ margin: '0 auto' }} onClick={handleGoogleSignIn} />
         </div>
       )}
