@@ -1,8 +1,7 @@
 import { useContext, createContext, useEffect, useState } from 'react';
-import { FirebaseApp } from 'firebase/app';
 import {
     GoogleAuthProvider,
-    signInWithRedirect,
+    signInWithPopup,
     signOut,
     onAuthStateChanged,
 } from 'firebase/auth';
@@ -15,8 +14,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const googleSignIn = () => {
         const provider = new GoogleAuthProvider();
-        // signInWithPopup(auth, provider);
-        signInWithRedirect(auth, provider)
+        signInWithPopup(auth, provider);
     };
 
     const logOut = () => {
@@ -27,6 +25,14 @@ export const AuthContextProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
             console.log('User', currentUser)
+            if (!currentUser.email.endsWith("@fpt.edu.vn")) {
+                logOut();
+                setTimeout(() => {
+                    alert("Please Login by account FPT University");
+                }, 1000);
+
+            }
+
         });
         return () => {
             unsubscribe();

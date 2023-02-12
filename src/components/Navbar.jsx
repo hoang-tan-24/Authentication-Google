@@ -1,27 +1,39 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+import { GoogleButton } from 'react-google-button';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import "./navbar.css"
 
 const Navbar = () => {
-  const { user, logOut } = UserAuth();
+  const { user, googleSignIn } = UserAuth();
 
-  const handleSignOut = async () => {
-    try {
-      await logOut()
-    } catch (error) {
-      console.log(error)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user != null) {
+      navigate('/account');
     }
-  }
+  }, [user]);
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   return (
-    <div className='flex justify-between bg-gray-200 w-full p-4'>
-      <h1 className='text-center text-2xl font-bold'>
-        Firebase Google Auth & Context
-      </h1>
+    <div className='navbar'>
+      <h1>F-Bus University</h1>
       {user?.displayName ? (
-        <button onClick={handleSignOut}>Logout</button>
+        <p></p>
       ) : (
-        <Link to='/signin'>Sign in</Link>
+        <div className='googleButton'>
+          <GoogleButton style={{ margin: '0 auto' }} onClick={handleGoogleSignIn} />
+        </div>
       )}
     </div>
   );
